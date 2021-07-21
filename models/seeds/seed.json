@@ -1,0 +1,61 @@
+{
+  "recordSeeds": [
+    {
+      "name": "7房租",
+      "detail": "房租",
+      "category": "家居物業",
+      "date": "2021-07-10",
+      "amount": 5000
+    },
+    {
+      "name": "晚餐",
+      "detail": "巷口義大利麵",
+      "category": "餐飲食品",
+      "date": "2021-07-12",
+      "amount": 200
+    },
+    {
+      "name": "搭捷運",
+      "detail": "北車>淡水",
+      "category": "交通出行",
+      "date": "2021-07-14",
+      "amount": 50
+    },
+    {
+      "name": "書",
+      "detail": "蜜蜂與遠雷",
+      "category": "休閒娛樂",
+      "date": "2021-07-16",
+      "amount": 220
+    },
+    {
+      "name": "搭火車",
+      "detail": "桃園<>台北",
+      "category": "交通出行",
+      "date": "2021-07-23",
+      "amount": 76
+    }
+  ],
+  "categorySeeds": [
+    {
+      "name": "家居物業",
+      "iconClass": "fas fa-home"
+    },
+    {
+      "name": "交通出行",
+      "iconClass": "fas fa-shuttle-van"
+    },
+    {
+      "name": "休閒娛樂",
+      "iconClass": "fas fa-grin-beam"
+    },
+    {
+      "name": "餐飲食品",
+      "iconClass": "fas fa-utensils"
+    },
+    {
+      "name": "其他",
+      "iconClass": "fas fa-pen"
+    }
+  ]
+}
