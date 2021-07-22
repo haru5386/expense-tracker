@@ -1,1 +1,76 @@
-<h4>123</h4>
+<div class="row justify-content-center">
+  <div class="col-6">
+    <select class="form-select" aria-label="Default select example">
+      <option selected>- 搜尋類別 -</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-6 my-4 d-flex justify-content-between">
+    <p class="text-secondary">總金額：</p>
+    <h1 class="" style="color: orange;">
+      {{totalAmount}}
+    </h1>
+  </div>
+</div>
+
+<div class="list-group">
+  {{#each records}}
+  <div class="row d-flex justify-content-center">
+    <div class="col-8">
+      <li class="list-group-item">
+        <div class="row">
+          <div style="color: #46A3FF; "
+            class="col-2 d-flex justify-content-center align-items-center category-icon fs-1"><i
+              class="{{ this.iconClass }}"></i>
+          </div>
+          <div class="col-6 mr-auto">
+            <p class="my-2 font-weight-bold record-name fs-4">{{ this.name }}</p>
+            <p class="my-1 font-weight-bold record-date text-secondary">{{ this.date }}</p>
+            <p class="my-1 font-weight-bold d-inline record-merchant text-secondary"> {{ this.detail }}</p>
+          </div>
+          <div class="col-2 d-flex align-items-center">
+            <p class="font-weight-bold record-amount">$ {{ this.amount }}</p>
+          </div>
+          <div class="col-2 d-flex flex-column justify-content-around">
+            <a href="/records/{{ this._id }}/edit" style="color: white; background-color: #46A3FF"
+              class="btn icon-button"><i class="fas fa-edit fa-lg"></i></a>
+            <button type="button" style="color: white; background-color: orange" class="btn icon-button delete-button"
+              data-bs-toggle="modal" data-bs-target="#deleteModal">
+              <i class="fas fa-trash-alt fa-lg"></i>
+            </button>
+            {{!-- <button type="button" style="color: white; background-color: orange"
+              class="btn icon-button delete-button" data-toggle="modal" data-target="#deleteModal"
+              data-name="{{ this.name }}" data-id="{{ this._id }}"><i class="fas fa-trash-alt fa-lg"></i></button> --}}
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        確定要刪除此筆支出紀錄？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <form action="/records/:id?_method=DELETE" method="POST" style="display: inline;" id="confirm-form">
+          <button type="submit" class="btn btn-primary">確定</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
