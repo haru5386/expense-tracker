@@ -13,6 +13,7 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static('public'))
 
 app.get('/', (req, res) => {
   Promise.all([Record.find().lean(), Category.find().lean()])
@@ -26,7 +27,6 @@ app.get('/', (req, res) => {
           }
         })
         record.date = changeDateformat(record.date)
-        console.log(record)
       })
       res.render('index', { records, totalAmount })
     })

@@ -40,7 +40,7 @@
             <a href="/records/{{ this._id }}/edit" style="color: white; background-color: #46A3FF"
               class="btn icon-button"><i class="fas fa-edit fa-lg"></i></a>
             <button type="button" style="color: white; background-color: orange" class="btn icon-button delete-button"
-              data-bs-toggle="modal" data-bs-target="#deleteModal">
+              data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{this._id}}">
               <i class="fas fa-trash-alt fa-lg"></i>
             </button>
             {{!-- <button type="button" style="color: white; background-color: orange"
@@ -67,7 +67,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <form action="/records/:id?_method=DELETE" method="POST" style="display: inline;" id="confirm-form">
+        <form action="/records/:id?_method=DELETE" method="POST" style="display: inline;" id="delete-form">
           <button type="submit" class="btn btn-primary">確定</button>
         </form>
       </div>
