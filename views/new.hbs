@@ -1,0 +1,56 @@
+<form action="/records" method="POST">
+  <div class="text-center my-4">
+    <p class="text-secondary">請輸入你的支出</p>
+  </div>
+  <div class="justify-content-center row align-items-center my-4">
+    <div class="col-auto">
+      <label for="name" class="col-form-label">名稱*：</label>
+    </div>
+    <div class="col-4">
+      <input type="text" id="name" name="name" class="form-control" required>
+    </div>
+  </div>
+  <div class="justify-content-center row align-items-center my-4">
+    <div class="col-auto">
+      <label for="date" class="col-form-label">日期*：</label>
+    </div>
+    <div class="col-4">
+      <input type="date" id="date" name="date" class="form-control" required>
+    </div>
+  </div>
+  <div class="justify-content-center row align-items-center my-4">
+    <div class="col-auto">
+      <label for="category" class="col-form-label">類別*：</label>
+    </div>
+    <div class="col-4">
+      <select class="form-select" id="category" name="category" required>
+        <option value="">-- 請選擇分類 --</option>
+        {{#each category}}
+        <option value="{{this.name}}">{{this.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+  <div class="justify-content-center row align-items-center my-4">
+    <div class="col-auto">
+      <label for="amount" class="col-form-label">金額*：</label>
+    </div>
+    <div class="col-4">
+      <input type="text" id="amount" name="amount" class="form-control" required>
+    </div>
+  </div>
+  <div class="justify-content-center row align-items-center my-4">
+    <div class="col-auto">
+      <label for="detail" class="col-form-label">說明*：</label>
+    </div>
+    <div class="col-4">
+      <textarea id="detail" name="detail" rows="2" cols="50" class="form-control" required></textarea>
+    </div>
+
+    </textarea>
+  </div>
+  <div class="d-grid gap-2 col-3 mx-auto">
+    <button type="submit" class="btn btn-primary">新增</button>
+  </div>
+
+</form>

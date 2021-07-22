@@ -9,5 +9,4 @@ listGroup.addEventListener('click', event => {
   }
   const deleteForm = document.querySelector('#delete-form')
   deleteForm.action = `/records/${id}?_method=DELETE`
-  console.log(id)
 })

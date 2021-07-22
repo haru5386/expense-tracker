@@ -35,6 +35,30 @@ app.get('/', (req, res) => {
       res.render('index', { errMsg: error.message })
     })
 })
+// 導向新增頁面
+app.get('/records/new', (req, res) => {
+  Category.find()
+    .lean()
+    .then((category) => {
+      res.render('new', { category })
+    })
+    .catch(error => {
+      console.log(error)
+      res.render('index', { errMsg: error.message })
+    })
+})
+
+
+// 接住新增的資料
+app.post('/records', (req, res) => {
+  const { name, date, category, amount, detail } = req.body
+  return Record.create({ name, date, category, amount, detail })
+    .then(res.redirect('/'))
+    .catch(error => {
+      console.log(error)
+      res.render('index', { errMsg: error.message })
+    })
+})
 
 // 總和
 function total(Record) {
