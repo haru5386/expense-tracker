@@ -2,6 +2,8 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const hbshelpers = require('handlebars-helpers')
+const multihelpers = hbshelpers()
 const app = express()
 
 const Record = require('./models/Record')
@@ -10,7 +12,7 @@ require('./config/mongoose')
 
 const port = 3000
 
-app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.engine('hbs', exphbs({ helpers: multihelpers, defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -50,6 +52,21 @@ app.get('/records/new', (req, res) => {
     })
 })
 
+// 導向編輯頁面
+app.get('/records/:id/edit', (req, res) => {
+  const id = req.params.id
+  Promise.all([Record.findById(id).lean(), Category.find().lean()])
+    .then(results => {
+      const [record, categories] = results
+      record.date = changeDateformat(record.date)
+      res.render('edit', { record, categories })
+    })
+    .catch(error => {
+      console.log(error)
+      res.render('index', { errMsg: error.message })
+    })
+})
+
 app.delete('/records/:id', (req, res) => {
   const id = req.params.id
   console.log(id)
@@ -67,7 +84,27 @@ app.delete('/records/:id', (req, res) => {
 app.post('/records', (req, res) => {
   const { name, date, category, amount, detail } = req.body
   return Record.create({ name, date, category, amount, detail })
-    .then(res.redirect('/'))
+    .then(() => res.redirect('/'))
+    .catch(error => {
+      console.log(error)
+      res.render('index', { errMsg: error.message })
+    })
+})
+
+// 修改新增的資料
+app.put('/records/:id', (req, res) => {
+  const id = req.params.id
+  const { name, date, category, amount, detail } = req.body
+  Record.findById(id)
+    .then((record) => {
+      record.name = name
+      record.date = date
+      record.category = category
+      record.amount = amount
+      record.detail = detail
+      return record.save()
+    })
+    .then(() => res.redirect('/'))
     .catch(error => {
       console.log(error)
       res.render('index', { errMsg: error.message })
@@ -92,6 +129,7 @@ function changeDateformat(date) {
   d = d < 10 ? '0' + d : d
   return y + '-' + m + '-' + d
 }
+
 app.listen(port, () => {
   console.log(`It's running on http://localhost:${port}`)
 })
