@@ -3,11 +3,12 @@ const { categorySeeds } = require('./seed.json')
 const Category = require('../Category')
 
 db.once('open', () => {
-  for (categorySeed of categorySeeds) {
-    Category.create({
-      name: categorySeed.name,
-      iconClass: categorySeed.iconClass
+  Category.create(categorySeeds)
+    .then(() => {
+      console.log('Category Seed done')
+      return db.close()
     })
-  }
-  console.log('Category Seed done')
+    .catch((error) => {
+      console.log(error)
+    })
 })
