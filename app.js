@@ -20,10 +20,19 @@ app.use(express.static('public'))
 app.use(methodOverride('_method'))
 
 app.get('/', (req, res) => {
+  const searchCategory = req.query.searchCategory
   Promise.all([Record.find().lean(), Category.find().lean()])
     .then(results => {
       const [records, categories] = results
       const totalAmount = total(records)
+      let searchRecord = []
+      if (isEmpty(req.query) || searchCategory === 'all') {
+        searchRecord = records
+      } else if (searchCategory) {
+        searchRecord = records.filter((record) => searchCategory === record.category)
+      } else { 
+        let wrongWord = "您的搜尋不存在"
+        return res.render('wrong', { wrongWord}) }
       records.forEach((record) => {
         categories.forEach((category) => {
           if (record.category === category.name) {
@@ -32,7 +41,7 @@ app.get('/', (req, res) => {
         })
         record.date = changeDateformat(record.date)
       })
-      res.render('index', { records, totalAmount })
+      res.render('index', { records: searchRecord, totalAmount, categories })
     })
     .catch(error => {
       console.log(error)
@@ -130,6 +139,15 @@ function changeDateformat(date) {
   return y + '-' + m + '-' + d
 }
 
+// 判斷搜尋結果是否為空
+function isEmpty(obj) {
+  for (i in obj) {
+    if (i) {
+      return false
+    }
+  }
+  return true
+}
 app.listen(port, () => {
   console.log(`It's running on http://localhost:${port}`)
 })
