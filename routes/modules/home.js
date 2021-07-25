@@ -10,7 +10,6 @@ router.get('/', (req, res) => {
   Promise.all([Record.find().lean(), Category.find().lean()])
     .then(results => {
       const [records, categories] = results
-      const totalAmount = total(records)
       let searchRecord = []
       if (isEmpty(req.query) || searchCategory === 'all') {
         searchRecord = records
@@ -20,6 +19,7 @@ router.get('/', (req, res) => {
         let wrongWord = "您的搜尋不存在"
         return res.render('wrong', { wrongWord })
       }
+      const totalAmount = total(searchRecord)
       records.forEach((record) => {
         categories.forEach((category) => {
           if (record.category === category.name) {
