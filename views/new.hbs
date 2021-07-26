@@ -7,7 +7,7 @@
       <label for="name" class="col-form-label">名稱*：</label>
     </div>
     <div class="col-4">
-      <input type="text" id="name" name="name" class="form-control" required>
+      <input type="text" id="name" name="name" class="form-control" value="{{name}}">
     </div>
   </div>
   <div class="justify-content-center row align-items-center my-4">
@@ -15,7 +15,7 @@
       <label for="date" class="col-form-label">日期*：</label>
     </div>
     <div class="col-4">
-      <input type="date" id="date" name="date" class="form-control" required>
+      <input type="date" id="date" name="date" class="form-control" value="{{date}}">
     </div>
   </div>
   <div class="justify-content-center row align-items-center my-4">
@@ -23,9 +23,9 @@
       <label for="category" class="col-form-label">類別*：</label>
     </div>
     <div class="col-4">
-      <select class="form-select" id="category" name="category" required>
+      <select class="form-select" id="category" name="category" data-value="{{date}}">
         <option value="">-- 請選擇分類 --</option>
-        {{#each category}}
+        {{#each Category}}
         <option value="{{this.name}}">{{this.name}}</option>
         {{/each}}
       </select>
@@ -36,7 +36,7 @@
       <label for="amount" class="col-form-label">金額*：</label>
     </div>
     <div class="col-4">
-      <input type="text" id="amount" name="amount" class="form-control" required>
+      <input type="number" id="amount" name="amount" class="form-control" value="{{amount}}">
     </div>
   </div>
   <div class="justify-content-center row align-items-center my-4">
@@ -44,13 +44,21 @@
       <label for="detail" class="col-form-label">說明*：</label>
     </div>
     <div class="col-4">
-      <textarea id="detail" name="detail" rows="2" cols="50" class="form-control" required></textarea>
+      <textarea id="detail" name="detail" rows="2" cols="50" class="form-control">{{detail}}</textarea>
     </div>
 
     </textarea>
   </div>
+  {{#each alert }}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{this.msg}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {{/each}}
   <div class="d-grid gap-2 col-3 mx-auto">
     <button type="submit" class="btn btn-primary">新增</button>
   </div>
 
 </form>
+
+<script src="/javacripts/edit.js"></script>

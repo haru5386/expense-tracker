@@ -16,8 +16,8 @@ router.get('/', (req, res) => {
       } else if (searchCategory) {
         searchRecord = records.filter((record) => searchCategory === record.category)
       } else {
-        let wrongWord = "您的搜尋不存在"
-        return res.render('wrong', { wrongWord })
+        let errMsg = "您的搜尋不存在"
+        return res.status(422).render('error', { errMsg })
       }
       const totalAmount = total(searchRecord)
       records.forEach((record) => {
@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
     })
     .catch(error => {
       console.log(error)
-      res.render('index', { errMsg: error.message })
+      res.status(422).render('error', { errMsg: error.message })
     })
 })
 
