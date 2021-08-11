@@ -6,6 +6,8 @@ const Category = require('../../models/Category')
 const { total, changeDateformat, isEmpty } = require('../../public/javacripts/helpfunction')
 
 router.get('/', (req, res) => {
+  console.log(req.query)
+  const searchMonth = req.query.searchMonth
   const searchCategory = req.query.searchCategory
   Promise.all([Record.find().lean(), Category.find().lean()])
     .then(results => {

@@ -58,7 +58,7 @@ router.post('/', [
   check('detail', '請輸入小於20字的描述')
     .not().isEmpty().isString().isLength({ max: 20 })
 ], (req, res) => {
-  const { name, date, category, amount, detail } = req.body
+  const { name, date, category, amount, detail, merchant } = req.body
   const errors = validationResult(req)
   Category.find()
     .lean()
@@ -66,9 +66,9 @@ router.post('/', [
       if (!errors.isEmpty()) {
         const alert = errors.array()
         // console.log(alert)
-        return res.render('new', { alert, name, date, Category, category, amount, detail })
+        return res.render('new', { alert, name, date, Category, category, amount, detail, merchant })
       } else {
-        Record.create({ name, date, category, amount, detail })
+        Record.create({ name, date, category, amount, detail, merchant })
         res.redirect('/')
       }
     })
@@ -81,7 +81,7 @@ router.post('/', [
 // 修改新增的資料
 router.put('/:id', (req, res) => {
   const id = req.params.id
-  const { name, date, category, amount, detail } = req.body
+  const { name, date, category, amount, detail, merchant } = req.body
   Record.findById(id)
     .then((record) => {
       record.name = name
@@ -89,6 +89,7 @@ router.put('/:id', (req, res) => {
       record.category = category
       record.amount = amount
       record.detail = detail
+      record.merchant = merchant
       return record.save()
     })
     .then(() => res.redirect('/'))
