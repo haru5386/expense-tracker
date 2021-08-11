@@ -60,13 +60,18 @@ router.post('/', [
 ], (req, res) => {
   const { name, date, category, amount, detail } = req.body
   const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    const alert = errors.array()
-    // console.log(alert)
-    return res.render('new', { alert, name, date, category, amount, detail })
-  }
-  return Record.create({ name, date, category, amount, detail })
-    .then(() => res.redirect('/'))
+  Category.find()
+    .lean()
+    .then(Category => {
+      if (!errors.isEmpty()) {
+        const alert = errors.array()
+        // console.log(alert)
+        return res.render('new', { alert, name, date, Category, category, amount, detail })
+      } else {
+        Record.create({ name, date, category, amount, detail })
+        res.redirect('/')
+      }
+    })
     .catch(error => {
       // console.log(error)
       res.status(422).render('error', { errMsg: error.message })
