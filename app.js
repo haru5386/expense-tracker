@@ -6,19 +6,21 @@ const session = require('express-session')
 const usePassport = require('./config/passport')
 const flash = require('connect-flash')
 const app = express()
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
-const Record = require('./models/Record')
-const Category = require('./models/Category')
 const routes = require('./routes')
 require('./config/mongoose')
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT
+
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))

@@ -13,3 +13,5 @@ node_modules
 *.log
 *.gz
 git commit -am "Modified .gitignore"
+
+.env

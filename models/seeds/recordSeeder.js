@@ -1,9 +1,12 @@
 const bcrypt = require('bcryptjs')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const db = require('../../config/mongoose')
 const { recordSeeds } = require('./seed.json')
 const Record = require('../Record')
-const User = require('../User')
+const User = require('../user')
 
 const SEED_USER = [{
   name: 'User1',
