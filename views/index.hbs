@@ -40,12 +40,13 @@
               class="{{ this.iconClass }}"></i>
           </div>
           <div class="col-6 mr-auto">
-            <p class="my-2 font-weight-bold record-name fs-4">{{ this.name }}</p>
-            <p class="my-1 font-weight-bold record-date text-secondary">{{ this.date }}</p>
-            <p class="my-1 font-weight-bold d-inline record-merchant text-secondary"> {{ this.detail }}</p>
+            <p class="my-2 font-weight-bold fs-4">{{ this.name }}</p>
+            <p class="my-1 font-weight-bold text-secondary">{{ this.date }}</p>
+            <p class="my-1 font-weight-bold text-secondary">{{ this.merchant }}</p>
+            <p class="my-1 font-weight-bold d-inline text-secondary"> {{ this.detail }}</p>
           </div>
           <div class="col-2 d-flex align-items-center">
-            <p class="font-weight-bold record-amount">$ {{ this.amount }}</p>
+            <p class="font-weight-bold">$ {{ this.amount }}</p>
           </div>
           <div class="col-2 d-flex flex-column justify-content-around">
             <a href="/records/{{ this._id }}/edit" style="color: white; background-color: #46A3FF"

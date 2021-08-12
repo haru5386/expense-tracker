@@ -6,9 +6,10 @@ const Category = require('../../models/Category')
 const { total, changeDateformat, isEmpty } = require('../../public/javacripts/helpfunction')
 
 router.get('/', (req, res) => {
+  const userId = req.user._id
   const searchMonth = req.query.searchMonth
   const searchCategory = req.query.searchCategory
-  Promise.all([Record.find().lean(), Category.find().lean()])
+  Promise.all([Record.find({ userId }).lean(), Category.find().lean()])
     .then(results => {
       const [records, categories] = results
       let searchRecord = []
