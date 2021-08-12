@@ -5,10 +5,13 @@ const Record = require('../../models/Record')
 const Category = require('../../models/Category')
 const { total, changeDateformat, isEmpty } = require('../../public/javacripts/helpfunction')
 
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   const userId = req.user._id
   const searchMonth = req.query.searchMonth
   const searchCategory = req.query.searchCategory
+  const searchArray = ['searchCategory', 'searchMonth']
+  console.log(Object.keys(req.query))
+  console.log(JSON.stringify(Object.keys(req.query)) === JSON.stringify(searchArray))
   Promise.all([Record.find({ userId }).lean(), Category.find().lean()])
     .then(results => {
       let [records, categories] = results
@@ -30,15 +33,23 @@ router.get('/', (req, res) => {
       let nowMonth = searchMonth ? searchMonth : records[0].date.slice(0, 7)
       const minMonth = records[records.length - 1].date.slice(0, 7)
       // 篩選條件
+      // 沒有req.query
       if (isEmpty(req.query)) {
         searchRecord = records
-      } else if (searchCategory === 'all' || ' ') {
+
+      } else if (JSON.stringify(Object.keys(req.query)) !== JSON.stringify(searchArray)) {
+        // req.query不是'searchCategory', 'searchMonth'
+        let message = "您的搜尋不存在"
+        return res.status(422).render('error', { message })
+      } else if (searchCategory === 'all') {
+        // 篩選月份
         records.filter((record) => {
           if (searchMonth === record.date.slice(0, 7)) {
             searchRecord.push(record)
           }
         })
-      } else if (searchCategory || searchMonth) {
+      } else {
+        // 篩選月份+類別
         records.filter((record) => {
           if (searchCategory === record.category) {
             if (searchMonth === record.date.slice(0, 7)) {
@@ -46,17 +57,11 @@ router.get('/', (req, res) => {
             }
           }
         })
-      } else {
-        let errMsg = "您的搜尋不存在"
-        return res.status(422).render('error', { errMsg })
       }
       const totalAmount = total(searchRecord)
       res.render('index', { records: searchRecord, totalAmount, categories, nowMonth, minMonth, searchCategory })
     })
-    .catch(error => {
-      console.log(error)
-      res.status(422).render('error', { errMsg: error.message })
-    })
+    .catch(err => next(err))
 })
 
 module.exports = router

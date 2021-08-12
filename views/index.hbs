@@ -6,7 +6,7 @@
   <div class="col-3">
     <select class="form-select form-control d-inline-block" aria-label="Default select example" name="searchCategory"
       id="category" onchange="submit()" data-value="{{searchCategory}}">
-      <option value=" ">-- 篩選類別 --</option>
+      <option value="no">-- 篩選類別 --</option>
       <option value="all">當月全部</option>
       {{#each categories}}
       <option value="{{this.name}}">{{this.name}}</option>

@@ -37,6 +37,12 @@ app.use((req, res, next) => {
 })
 app.use(routes)
 
+// error handler
+app.use(function (err, req, res, next) {
+  res.locals.message = err.message
+  res.status(422)
+  res.render('error')
+})
 
 
 app.listen(port, () => {

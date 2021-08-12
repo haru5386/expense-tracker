@@ -42,7 +42,7 @@ router.post('/register', (req, res) => {
         name, email, password: hash
       }))
       .then(() => res.redirect('/'))
-      .catch(err => console.log(err))
+      .catch(err => next(err))
   })
 })
 

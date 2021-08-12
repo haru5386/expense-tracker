@@ -6,20 +6,17 @@ const { changeDateformat } = require('../../public/javacripts/helpfunction')
 const { check, validationResult } = require('express-validator')
 
 // 導向新增頁面
-router.get('/new', (req, res) => {
+router.get('/new', (req, res, next) => {
   Category.find()
     .lean()
     .then((Category) => {
       res.render('new', { Category })
     })
-    .catch(error => {
-      console.log(error)
-      res.status(422).render('error', { errMsg: error.message })
-    })
+    .catch(err => next(err))
 })
 
 // 導向編輯頁面
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', (req, res, next) => {
   const userId = req.user._id
   const _id = req.params.id
   Promise.all([Record.findOne({ _id, userId }).lean(), Category.find().lean()])
@@ -28,22 +25,16 @@ router.get('/:id/edit', (req, res) => {
       record.date = changeDateformat(record.date)
       res.render('edit', { record, categories })
     })
-    .catch(error => {
-      console.log(error)
-      res.status(422).render('error', { errMsg: error.message })
-    })
+    .catch(err => next(err))
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res, next) => {
   const userId = req.user._id
   const _id = req.params.id
   Record.findOne({ _id, userId })
     .then(record => record.remove())
     .then(() => res.redirect('/'))
-    .catch(error => {
-      console.log(error)
-      res.status(422).render('error', { errMsg: error.message })
-    })
+    .catch(err => next(err))
 })
 
 
@@ -59,7 +50,7 @@ router.post('/', [
     .isNumeric(),
   check('detail', '請輸入小於20字的描述')
     .not().isEmpty().isString().isLength({ max: 20 })
-], (req, res) => {
+], (req, res, next) => {
   const userId = req.user._id
   const { name, date, category, amount, detail, merchant } = req.body
   const errors = validationResult(req)
@@ -75,14 +66,11 @@ router.post('/', [
         res.redirect('/')
       }
     })
-    .catch(error => {
-      // console.log(error)
-      res.status(422).render('error', { errMsg: error.message })
-    })
+    .catch(err => next(err))
 })
 
 // 修改新增的資料
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, res, next) => {
   const userId = req.user._id
   const _id = req.params.id
   const { name, date, category, amount, detail, merchant } = req.body
@@ -97,9 +85,6 @@ router.put('/:id', (req, res) => {
       return record.save()
     })
     .then(() => res.redirect('/'))
-    .catch(error => {
-      console.log(error)
-      res.status(422).render('error', { errMsg: error.message })
-    })
+    .catch(err => next(err))
 })
 module.exports = router
