@@ -48,6 +48,8 @@ router.post('/', [
     .not().isEmpty(),
   check('amount', '請輸金額')
     .isNumeric(),
+  check('merchant', '請輸入1~20的字位元')
+    .isLength({ min: 1, max: 20 }),
   check('detail', '請輸入小於20字的描述')
     .not().isEmpty().isString().isLength({ max: 20 })
 ], (req, res, next) => {

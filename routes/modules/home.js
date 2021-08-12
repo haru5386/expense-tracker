@@ -10,8 +10,6 @@ router.get('/', (req, res, next) => {
   const searchMonth = req.query.searchMonth
   const searchCategory = req.query.searchCategory
   const searchArray = ['searchCategory', 'searchMonth']
-  console.log(Object.keys(req.query))
-  console.log(JSON.stringify(Object.keys(req.query)) === JSON.stringify(searchArray))
   Promise.all([Record.find({ userId }).lean(), Category.find().lean()])
     .then(results => {
       let [records, categories] = results

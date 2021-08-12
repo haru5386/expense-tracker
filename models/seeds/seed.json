@@ -5,35 +5,56 @@
       "detail": "房租",
       "category": "家居物業",
       "date": "2021-07-10",
-      "amount": 5000
+      "amount": 5000,
+      "merchant": ""
     },
     {
       "name": "晚餐",
       "detail": "巷口義大利麵",
       "category": "餐飲食品",
       "date": "2021-07-12",
-      "amount": 200
+      "amount": 200,
+      "merchant": "微笑義式"
     },
     {
       "name": "搭捷運",
       "detail": "北車>淡水",
       "category": "交通出行",
       "date": "2021-07-14",
-      "amount": 50
+      "amount": 50,
+      "merchant": "捷運"
     },
     {
       "name": "書",
       "detail": "蜜蜂與遠雷",
       "category": "休閒娛樂",
       "date": "2021-07-16",
-      "amount": 220
+      "amount": 220,
+      "merchant": "誠品"
     },
     {
       "name": "搭火車",
       "detail": "桃園<>台北",
       "category": "交通出行",
       "date": "2021-07-23",
-      "amount": 76
+      "amount": 76,
+      "merchant": "台鐵"
+    },
+    {
+      "name": "電風扇",
+      "detail": "panasonic電風扇",
+      "category": "家居物業",
+      "date": "2021-04-23",
+      "amount": 999,
+      "merchant": "pchome"
+    },
+    {
+      "name": "水果",
+      "detail": "芒果奇異果",
+      "category": "餐飲食品",
+      "date": "2021-05-23",
+      "amount": 76,
+      "merchant": "全聯"
     }
   ],
   "categorySeeds": [
