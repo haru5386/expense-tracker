@@ -10,10 +10,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-
-const Record = require('./models/Record')
-const Category = require('./models/Category')
-const User = require('../models/User')
 const routes = require('./routes')
 require('./config/mongoose')
 
